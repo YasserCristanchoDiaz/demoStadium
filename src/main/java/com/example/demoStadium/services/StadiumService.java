@@ -2,7 +2,9 @@ package com.example.demoStadium.services;
 
 import com.example.demoStadium.entities.City;
 import com.example.demoStadium.entities.Stadium;
+import com.example.demoStadium.entities.Team;
 import com.example.demoStadium.repositories.StadiumRepository;
+import com.example.demoStadium.repositories.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,9 @@ public class StadiumService {
 
     @Autowired
     private StadiumRepository stadiumRepository;
+
+    @Autowired
+    private TeamRepository teamRepository;
 
     public List<Stadium> findAll() {
         return stadiumRepository.findAll();
@@ -46,17 +51,16 @@ public class StadiumService {
     public void delete(Integer id) {
         Stadium stadium = findById(id);
         if (stadium != null) {
+            List<Team> teamsWithStadium = teamRepository.findByStadium(stadium);
+            for (Team team : teamsWithStadium) {
+                team.setStadium(null);
+                teamRepository.save(team);
+            }
+
             stadiumRepository.delete(stadium);
         } else {
             throw new RuntimeException("Stadium not found with id: " + id);
         }
     }
 
-    /*public List<Stadium> findByCountry(String country) {
-        return stadiumRepository.findByCountry(country);
-    }*/
-
-    public List<Stadium> findByName(String name) {
-        return stadiumRepository.findByName(name);
-    }
 }

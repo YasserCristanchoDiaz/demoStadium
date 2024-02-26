@@ -76,17 +76,7 @@ public class StadiumController {
         }
     }
 
-    /*@GetMapping("/byCountry/{country}")
-    public ResponseEntity<Object> findByCountry(@RequestBody String country) {
-        try {
-            List<Stadium> result = stadiumService.findByCountry(country);
-            return ResponseHandler.generateResponse("Success", HttpStatus.OK, result);
-        } catch (Exception e) {
-            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null);
-        }
-    }*/
-
-    @GetMapping("/byName/{name}")
+    /*@GetMapping("/byName/{name}")
     public ResponseEntity<Object> findByName(@PathVariable  String name){
         try {
             List<Stadium> result = stadiumService.findByName(name);
@@ -94,5 +84,5 @@ public class StadiumController {
         }catch (Exception e){
             return  ResponseHandler.generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null);
         }
-    }
+    }*/
 }

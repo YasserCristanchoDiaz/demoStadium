@@ -9,9 +9,4 @@ import java.util.List;
 
 @Repository
 public interface StadiumRepository extends JpaRepository<Stadium, Integer> {
-
-    @Query("SELECT s FROM Stadium s WHERE s.name LIKE CONCAT('%',:name, '%')")
-    public List<Stadium> findByName(String name);
-
-    //public List<Stadium> findByCountry(String country);
 }

@@ -1,7 +1,9 @@
 package com.example.demoStadium.services;
 
 import com.example.demoStadium.entities.City;
+import com.example.demoStadium.entities.Stadium;
 import com.example.demoStadium.repositories.CityRepository;
+import com.example.demoStadium.repositories.StadiumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,9 @@ public class CityService {
 
     @Autowired
     private CityRepository cityRepository;
+
+    @Autowired
+    private StadiumService stadiumService;
 
     public List<City> findAll() {
         return cityRepository.findAll();
@@ -43,6 +48,10 @@ public class CityService {
         City city = findById(id);
         City deleted = new City();
         if (city != null) {
+            List<Stadium> stsCity = city.getStadiums();
+            for (Stadium st: stsCity) {
+                stadiumService.delete(st.getId());
+            }
             deleted = city;
             cityRepository.delete(city);
             return deleted;
